@@ -7,18 +7,46 @@ class RecursivePartitionBasedKMeans:
         self.centroids = None
         self.max_iterations = 100
 
-    def _create_partition(self, X, k):
-        pass
+    def _create_partition(self, X, partition):
+        """Create a quadtree partition of the data."""
+        new_partition = []
+
+        for subset in partition:
+
+            # If the subset is empty, skip it
+            if len(subset) == 0:
+                continue
+
+            
+
+            # Calculate the centroid of the subset
+            centroid = np.mean(X[subset.indices], axis=0)
+
+            # Calculate the distance of each point to the centroid
+            distances = np.linalg.norm(X[subset.indices] - centroid, axis=1)
+
+            # Find the point with the maximum distance
+            max_distance_index = np.argmax(distances)
+
+            # Split the subset into two subsets
+            left_subset = Subset(subset.indices[:max_distance_index], subset.start, subset.start + max_distance_index)
+            right_subset = Subset(subset.indices[max_distance_index:], subset.start + max_distance_index, subset.end)
+
+            new_partition.append(left_subset)
+            new_partition.append(right_subset)
+
+        return new_partition
 
 
-    def fit(self, X, k, threshold=0.01):
+    def fit(self, X, threshold=0.01):
         X = X.copy()
 
         i = 0
+        partition = [Subset(X, 0, X.shape[0])]
 
         while i < self.max_iterations:
             
-            self._create_partition(X, k)
+            partition = self._create_partition(X, partition)
 
             i += 1
 
