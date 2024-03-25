@@ -3,9 +3,11 @@ import numpy as np
 from subset import Subset
 
 class RecursivePartitionBasedKMeans:
-    def __init__(self) -> None:
-        self.centroids = None
+    def __init__(self, k=4, random_state=0) -> None:
         self.max_iterations = 100
+        self.k = k
+        self.centroids = None
+        self.random_state = random_state
 
     def _create_partition(self, X, partition):
         """Create a quadtree partition of the data."""
@@ -16,8 +18,6 @@ class RecursivePartitionBasedKMeans:
             # If the subset is empty, skip it
             if len(subset) == 0:
                 continue
-
-            
 
             # Calculate the centroid of the subset
             centroid = np.mean(X[subset.indices], axis=0)
@@ -47,6 +47,13 @@ class RecursivePartitionBasedKMeans:
         while i < self.max_iterations:
             
             partition = self._create_partition(X, partition)
+
+            # Get representatives and weights for computed partition
+            representatives, W = [(subset.get_representative(X[subset.indexes]), len(subset)) for subset in partition]
+            
+            # Initialize centroids
+            np.array(representatives[np.random.choice(representatives.shape[0], self.k, replace=False)])
+
 
             i += 1
 
