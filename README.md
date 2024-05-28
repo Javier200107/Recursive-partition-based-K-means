@@ -1,6 +1,6 @@
 # Recursive-partition-based-K-means
 
-This is a Python implementation of the Recursive partition-based K-means algorithm (RPKM). The algorithm is based on the paper "Recursive partition-based clustering algorithm for large data sets" by S. Murthy and S.K. Pal. The paper can be found [here](https://www.sciencedirect.com/science/article/abs/pii/S0950705116302027).
+This is a Python implementation of the Recursive partition-based K-means algorithm (RPKM). The algorithm is based on the paper "Recursive partition-based clustering algorithm for large data sets" by Marco Capó, Aritz Pérez and Jose A. Lozano. The paper can be found [here](https://www.sciencedirect.com/science/article/abs/pii/S0950705116302027).
 
 RPKM is a clustering algorithm that is based on the K-means algorithm. It recursively partitions the data set into smaller clusters until the number of data points in each cluster is less than a specified threshold. The algorithm is useful for clustering large data sets that cannot be clustered using traditional K-means algorithms.
 
